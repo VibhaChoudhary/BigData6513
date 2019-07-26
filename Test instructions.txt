@@ -1,0 +1,184 @@
+Go to EmployeeAttrition directory and run following commands:
+  cd ~/P2/EmployeeAttrition
+
+Run Java Classifiers:
+
+  1. Random Forest:
+  ``> spark-submit --master local[*] --class EmployeeAttrition ./Java/JavaRandomForest/target/JavaRandomForest-1.0-SNAPSHOT.jar
+      
+    =================================
+    Count of training data: 1003
+    Count of test data: 467
+    =================================
+    Total True Predictions: 400
+    Total False Predictions: 67
+    =================================
+    Area under ROC: 0.7206918641896221
+    Accuracy: 0.8565310492505354
+    Test Error: 0.14346895074946464
+    =================================
+    TP: 12 FP: 58 FN: 9 TN: 388
+    =================================
+    Confusion matrix:
+                      Actual
+    Prediction      0       1
+            0       388.0   58.0
+            1       9.0     12.0
+    =================================
+
+  2. GradientBoost
+    > spark-submit --master local[*] --class EmployeeAttrition ./Java/JavaGradientBoost/target/JavaGradientBoost-1.0-SNAPSHOT.jar
+  
+    =================================
+    Count of training data: 1003
+    Count of test data: 467
+    =================================
+    Total True Predictions: 399
+    Total False Predictions: 68
+    =================================
+    Area under ROC: 0.7054341736694678
+    Accuracy: 0.854389721627409
+    Test Error: 0.145610278372591
+    =================================
+    TP: 22 FP: 48 FN: 20 TN: 377
+    =================================
+    Confusion matrix:
+                      Actual
+    Prediction      0       1
+            0       377.0   48.0
+            1       20.0    22.0
+    =================================
+
+  3. Logistic Regression:
+   > spark-submit --master local[*] --class EmployeeAttrition ./Java/JavaLogisticRegression/target/JavaLogisticRegression-1.0-SNAPSHOT.jar
+  
+   =================================
+   Count of training data: 1003
+   Count of test data: 467
+   =================================
+   Total True Predictions: 405
+   Total False Predictions: 62
+   =================================
+   Area under ROC: 0.7424093772591139
+   Accuracy: 0.867237687366167
+   Test Error: 0.13276231263383298
+   =================================
+   TP: 27 FP: 43 FN: 19 TN: 378
+   =================================
+   Confusion matrix:
+                     Actual
+   Prediction      0       1
+           0       378.0   43.0
+           1       19.0    27.0
+   =================================
+   
+   4. Run 5 classifiers parallely on the dataset and display the metrics
+   > spark-submit --master local[*] --class RunClassification ./Java/MLClassifications/target/MLClassifications-1.0-SNAPSHOT.jar
+   
+   -----------------------------------------------------------------------------
+   Classifiers Analysis results
+   -----------------------------------------------------------------------------
+   [Classifier, Total_true, Total_false, Train_time(s), Predict_time(s), TP, TN, FP, FN, ACC, AUC]
+   [GBT, 401, 66, 47, 0, 26, 375, 44, 22, 0.8586723768736617, 0.7183273667462211]
+   [DST, 392, 75, 3, 0, 14, 378, 56, 19, 0.8394004282655246, 0.647605083088954]
+   [RF, 400, 67, 4, 0, 12, 388, 58, 9, 0.8565310492505354, 0.7206918641896221]
+   [NB, 234, 233, 2, 0, 41, 193, 29, 204, 0.5010706638115632, 0.5183581540724398]
+   [LR, 405, 62, 7, 0, 27, 378, 43, 19, 0.867237687366167, 0.7424093772591139]
+   -----------------------------------------------------------------------------
+   Total execution time: 60seconds
+   -----------------------------------------------------------------------------
+
+
+
+Run R Classifiers:
+  1. Random Forest
+    > Rscript R/RRandomForest/EmployeeAttrition.R
+    
+      [1] "================================="
+      [1] "Count of training data: 1008"
+      [1] "Count of test data: 462"
+      [1] "Total True Predictions: 391"
+      [1] "Total False Predictions: 391"
+      [1] "================================="
+      [1] "Area under ROC: 0.781834268162393"
+      [1] "Accuracy: 0.846320346320346"
+      [1] "Test Error: 0.153679653679654"
+      [1] "TP: 10 FP: 68 FN: 3 TN: 381"
+      [1] "================================="
+      [1] "Confusion matrix: "
+                       Actual
+      Prediction       0       1
+              0        381     68
+              1        3       10
+      [1] "================================="
+
+
+   
+  2. GradientBoost
+    > Rscript R/RGradientBoost/EmployeeAttrition.R
+    
+    Distribution not specified, assuming bernoulli ...
+    [1] "================================="
+    [1] "Count of training data: 1008"
+    [1] "Count of test data: 462"
+    [1] "Total True Predictions: 384"
+    [1] "Total False Predictions: 384"
+    [1] "================================="
+    [1] "Area under ROC: 0.718499599358974"
+    [1] "Accuracy: 0.831168831168831"
+    [1] "Test Error: 0.168831168831169"
+    [1] "TP: 0 FP: 78 FN: 0 TN: 384"
+    [1] "================================="
+    [1] "Confusion matrix: "
+                     Actual
+    Prediction       0       1
+            0        384     78
+            1        0       0
+    [1] "================================="
+
+    
+  3. Logistic Regression:
+    
+    > Rscript R/RLogisticRegression/EmployeeAttrition.R
+    
+      [1] "================================="
+      [1] "Count of training data: 1008"
+      [1] "Count of test data: 462"
+      [1] "Total True Predictions: 391"
+      [1] "Total False Predictions: 391"
+      [1] "================================="
+      [1] "Area under ROC: 0.80849358974359"
+      [1] "Accuracy: 0.846320346320346"
+      [1] "Test Error: 0.153679653679654"
+      [1] "TP: 19 FP: 59 FN: 12 TN: 372"
+      [1] "================================="
+      [1] "Confusion matrix: "
+                       Actual
+      Prediction       0       1
+              0        372     59
+              1        12      19
+      [1] "================================="
+
+
+  4. Run 5 classifiers parallely on the dataset and display the metrics
+  
+  > Rscript R/MLClassifications/RunClassifications.R
+  
+   [1] "================================="
+   [1] "Records in train data: 1008"
+   [1] "Records in test data: 462"
+   [1] "================================="
+   Distribution not specified, assuming bernoulli ...
+               Classifier True False Train_time Predict_time       Acc       AUC
+   1:      Gradient Boost  384    78      0.128        0.008 0.8311688 0.7021568
+   2:       Decision Tree  384    78      0.053         0.01 0.8311688 0.6618924
+   3: Logistic Regression  391    71      0.053         0.01 0.8463203 0.8084936
+   4:       random Forest  392    70      1.973        0.071 0.8484848 0.7907151
+   5:         Naive Bayes  360   102      0.058        1.112 0.7792208 0.7395833
+      TP  TN FP FN
+   1:  0 384 78  0
+   2: 13 371 65 13
+   3: 19 372 59 12
+   4: 11 381 67  3
+   5: 44 316 34 68
+
